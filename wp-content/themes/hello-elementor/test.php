@@ -68,6 +68,7 @@ switch ($order) {
 $loop = new WP_Query($args);
 
 if ($loop->have_posts()) : ?>
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/css/style.css" type="text/css">
     <div class="product-filter container my-4">
         <div class="title-page">
             <h3>Sim Data 4G</h3>

@@ -175,10 +175,11 @@ if (!empty($excluded_product_ids)) {
 
 $query = new WP_Query($args);
 ?>
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/css/style.css" type="text/css">
 <div class="desktop-layout">
     <!-- Breakcrumd -->
     <div class="container">
-    <?php if (function_exists('rank_math_the_breadcrumbs')) rank_math_the_breadcrumbs(); ?>
+        <?php if (function_exists('rank_math_the_breadcrumbs')) rank_math_the_breadcrumbs(); ?>
     </div>
     <!-- Tiêu đề trang -->
     <div class="title-page">
@@ -388,6 +389,18 @@ $query = new WP_Query($args);
                 document.getElementById('package-popup').style.display = 'flex';
                 document.getElementById('package-popup').dataset.productId = productId;
                 document.getElementById('package-popup').dataset.phoneNumber = phoneNumber;
+
+                // Thêm sự kiện click cho các gói cước
+                const packageItems = document.querySelectorAll('.package-item');
+                packageItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        packageItems.forEach(i => i.classList.remove('selected')); // Xóa lớp selected khỏi tất cả
+                        this.classList.add('selected'); // Thêm lớp selected cho gói cước đã chọn
+                    });
+                });
+
+                currentIndex = 0; // Đặt lại chỉ số hiện tại
+                updateCarousel(); // Cập nhật carousel
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -400,11 +413,40 @@ $query = new WP_Query($args);
         document.getElementById('package-popup').style.display = 'none';
     });
 
+    // Cập nhật carousel
+    function updateCarousel() {
+        const items = document.querySelectorAll('.package-item');
+        items.forEach(item => item.style.display = 'none'); // Ẩn tất cả các gói cước
+        for (let i = currentIndex; i < currentIndex + 3 && i < items.length; i++) {
+            items[i].style.display = 'block'; // Hiển thị 3 gói cước
+        }
+    }
+
+    // Nút Next
+    document.querySelector('#next-btn').addEventListener('click', function() {
+        currentIndex += 3; // Tăng chỉ số
+        if (currentIndex >= document.querySelectorAll('.package-item').length) {
+            currentIndex = document.querySelectorAll('.package-item').length - 3; // Giới hạn chỉ số
+        }
+        updateCarousel(); // Cập nhật carousel
+    });
+
+    // Nút Previous
+    document.querySelector('#prev-btn').addEventListener('click', function() {
+        currentIndex -= 3; // Giảm chỉ số
+        if (currentIndex < 0) {
+            currentIndex = 0; // Giới hạn chỉ số
+        }
+        updateCarousel(); // Cập nhật carousel
+    });
+
     // Thêm gói cước vào giỏ hàng
     document.querySelector('.add-package').addEventListener('click', function() {
-        const selectedPackageId = document.querySelector('#carousel-items .carousel-item.active .package-item').dataset.id;
-        const productId = document.getElementById('package-popup').dataset.productId;
-        const phoneNumber = document.getElementById('package-popup').dataset.phoneNumber;
+        const selectedPackageId = document.querySelector('.package-item.selected')?.dataset.id; // Lấy ID gói cước đã chọn
+        console.log('Selected Package ID:', selectedPackageId); // Ghi lại ID
+
+        const productId = document.getElementById('package-popup').dataset.productId; // Lấy ID SIM
+        const phoneNumber = document.getElementById('package-popup').dataset.phoneNumber; // Lấy số điện thoại
 
         if (selectedPackageId) {
             // Thêm gói cước vào giỏ hàng
@@ -415,7 +457,7 @@ $query = new WP_Query($args);
                 },
                 body: new URLSearchParams({
                     'action': 'add_to_cart',
-                    'product_id': selectedPackageId
+                    'product_id': selectedPackageId // Gói cước
                 })
             })
             .then(response => response.json())
@@ -429,8 +471,8 @@ $query = new WP_Query($args);
                         },
                         body: new URLSearchParams({
                             'action': 'add_to_cart',
-                            'product_id': productId,
-                            'phone_number': phoneNumber
+                            'product_id': productId, // SIM
+                            'phone_number': phoneNumber // Số điện thoại
                         })
                     })
                     .then(response => response.json())
@@ -440,7 +482,7 @@ $query = new WP_Query($args);
                             document.getElementById('package-popup').style.display = 'none';
                             location.reload(); // Tải lại trang sau khi thêm thành công
                         } else {
-                            alert('Có lỗi xảy ra khi thêm gói cước vào giỏ hàng.');
+                            alert('Có lỗi xảy ra khi thêm SIM vào giỏ hàng.');
                         }
                     });
                 } else {
@@ -455,10 +497,12 @@ $query = new WP_Query($args);
         }
     });
 
-        document.getElementById('filter-fast').addEventListener('change', function() {
-            this.submit();
-        });
+    // Tự động submit form khi thay đổi điều kiện lọc
+    document.getElementById('filter-fast').addEventListener('change', function() {
+        this.submit();
     });
+});
+
 </script>
 
 <div id="package-popup" class="popup" style="display:none;">
@@ -478,8 +522,8 @@ $query = new WP_Query($args);
             </button>
         </div>
         <div class="payment-group">
-        <button class="button add-package">Thêm vào giỏ hàng</button>
-        <button class="button proceed-to-checkout">Tiến hành thanh toán</button>
+            <button class="button add-package">Thêm vào giỏ hàng</button>
+            <button class="button proceed-to-checkout">Tiến hành thanh toán</button>
         </div>
     </div>
 </div>
