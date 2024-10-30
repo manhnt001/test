@@ -1,8 +1,4 @@
 /* Popup Styles */
-.package-item.selected {
-    border: 1px solid #007bff;
-
-}
 
 .popup {
     position: fixed;
@@ -18,16 +14,12 @@
 }
 
 .popup-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background: #fff;
     padding: 20px;
     border-radius: 10px;
-    width: 90%;
+    width: 100%;
     max-width: 100%;
     position: relative;
-    flex-direction: column;
 }
 
 #package-popup {
@@ -36,22 +28,26 @@
     align-items: center; 
 }
 
+.popup-content {
+    display: block;
+}
 
 .package-details {
     width: 300px; 
     padding: 10px;
     border: 1px solid #ccc;
+    margin: 10px 0; 
     box-sizing: border-box;
 	border-radius:16px;
-    text-align: left;
 }
 .package-details h5{
-    text-align: left;
+    text-align: center;
 }
 
 .carousel {
     text-align: center;
 }
+
 
 .payment-group{
 	display: flex;
@@ -74,12 +70,18 @@
     text-align: left;
 }
 
+
+
 .package-item {
+    width: 300px;
     display: flex;
-    justify-content: center;
-    border-radius: 16px;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
     margin: 10px;
     transition: transform 0.3s;
+    align-items: flex-start;
 }
 
 .package-item:hover {
@@ -88,9 +90,6 @@
 }
 
 /* Carousel Control Styles */
-.carousel{
-    padding: 15px 0;
-}
 .carousel-control-prev,
 .carousel-control-next {
     filter: invert(1); /* Đổi màu icon sang trắng */
@@ -146,8 +145,6 @@
 .button:hover {
     background-color: #0056b3;
 }
-
-
 
 /* Resize image network*/
 .product-item.nha-mang img {
