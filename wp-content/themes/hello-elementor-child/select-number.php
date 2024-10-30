@@ -462,7 +462,6 @@ $query = new WP_Query($args);
         });
     });
 </script>
-
 <div id="package-popup" class="popup" style="display:none;">
     <div class="popup-overlay"></div>
     <div class="popup-content">
@@ -485,5 +484,4 @@ $query = new WP_Query($args);
         </div>
     </div>
 </div>
-
 <?php get_footer(); ?>
