@@ -26,6 +26,7 @@ add_action('wp_enqueue_scripts', 'sim_package_selector_enqueue_scripts');
 function sim_package_selector_popup_html()
 {
 ?>
+<<<<<<< HEAD
     <div id="package-popup" class="popup" style="display:none;">
         <div class="popup-overlay"></div>
         <div class="popup-content">
@@ -48,6 +49,30 @@ function sim_package_selector_popup_html()
             </div>
         </div>
     </div>
+=======
+<div id="package-popup" class="popup" style="display:none;">
+    <div class="popup-overlay"></div>
+    <div class="popup-content">
+        <button class="close-popup" aria-label="Close Popup" title="Đóng">✖</button>
+        <h2>Chọn gói cước</h2>
+        <div id="package-carousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner" id="carousel-items"></div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#package-carousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#package-carousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <div class="payment-group">
+        <button class="button add-package">Thêm vào giỏ hàng</button>
+        <button class="button proceed-to-checkout">Tiến hành thanh toán</button>
+        </div>
+    </div>
+</div>
+>>>>>>> origin/main
 <?php
 }
 add_action('wp_footer', 'sim_package_selector_popup_html');
@@ -100,6 +125,7 @@ function get_packages_by_network()
                         return $attr;
                     }, $variation['attributes']));
                     $price = wc_price($variation['display_price']); // Lấy giá của biến thể
+<<<<<<< HEAD
                     // Chuyển đổi "-thang" thành " tháng" và quy đổi tháng sang ngày
                     $variation_name = str_replace('-thang', ' tháng', $variation_name);
                     if (preg_match('/(\d+) tháng/', $variation_name, $matches)) {
@@ -107,6 +133,8 @@ function get_packages_by_network()
                         $days = $month_value * 30; // Quy đổi tháng sang ngày
                         $variation_name = "$days ngày"; // Cập nhật tên biến thể
                     }
+=======
+>>>>>>> origin/main
 
                     // Tạo HTML cho gói cước
                     if ($counter % $items_per_slide === 0) {
@@ -114,14 +142,21 @@ function get_packages_by_network()
                             $carousel_items .= '</div></div>'; // Kết thúc item carousel trước đó
                         }
                         $carousel_items .= '<div class="carousel-item ' . ($counter === 0 ? 'active' : '') . '">
+<<<<<<< HEAD
                             <div class="d-flex">'; // Sử dụng flexbox để sắp xếp gói cước
+=======
+                            <div class="d-flex justify-content-around">'; // Sử dụng flexbox để sắp xếp gói cước
+>>>>>>> origin/main
                     }
 
                     $carousel_items .= '<div class="package-item" data-id="' . $variation_id . '">
                         <h5>Gói ' . $product->get_name() . ' </h5>
                         <h5>'  . $price . '/' . $variation_name . '</h5>
                         <p>' . wp_kses_post($description) . '</p>
+<<<<<<< HEAD
                         <img class="check-icon" src="' . get_stylesheet_directory_uri() . '/assets/image/check-checkout.svg" alt="check-checkout" style="display:none;">
+=======
+>>>>>>> origin/main
                     </div>';
 
                     $counter++;
@@ -147,7 +182,11 @@ function get_packages_by_network()
 
         // Kết thúc item carousel cuối cùng
         if ($counter > 0) {
+<<<<<<< HEAD
             $carousel_items .= '</div></div>';
+=======
+            $carousel_items .= '</div></div>'; 
+>>>>>>> origin/main
         }
 
         $carousel_items .= '</div>'; // Kết thúc carousel-inner
@@ -176,4 +215,8 @@ function ajax_add_to_cart()
     }
 
     wp_die();
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/main

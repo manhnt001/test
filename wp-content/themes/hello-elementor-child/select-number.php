@@ -180,7 +180,7 @@ $query = new WP_Query($args);
 <div class="desktop-layout">
     <!-- Breakcrumd -->
     <div class="container">
-        <?php if (function_exists('rank_math_the_breadcrumbs')) rank_math_the_breadcrumbs(); ?>
+    <?php if (function_exists('rank_math_the_breadcrumbs')) rank_math_the_breadcrumbs(); ?>
     </div>
     <!-- Tiêu đề trang -->
     <div class="title-page">
@@ -373,6 +373,7 @@ $query = new WP_Query($args);
                 const networkProvider = this.getAttribute('data-network-provider');
                 const phoneNumber = this.getAttribute('data-phone-number');
 
+<<<<<<< HEAD
                 // Gọi AJAX để lấy các gói cước có cùng nhà mạng
                 fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
                         method: 'POST',
@@ -397,9 +398,32 @@ $query = new WP_Query($args);
                     .catch(error => {
                         console.error('Error:', error);
                     });
+=======
+            // Gọi AJAX để lấy các gói cước có cùng nhà mạng
+            fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    'action': 'get_packages_by_network',
+                    'network_provider': networkProvider
+                })
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('carousel-items').innerHTML = data; // Cập nhật các item trong carousel
+                document.getElementById('package-popup').style.display = 'flex';
+                document.getElementById('package-popup').dataset.productId = productId;
+                document.getElementById('package-popup').dataset.phoneNumber = phoneNumber;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+>>>>>>> origin/main
             });
         });
 
+<<<<<<< HEAD
         // Hàm gán sự kiện click cho gói cước
         function addPackageClickEvent() {
             const packageItems = document.querySelectorAll('.package-item');
@@ -431,13 +455,48 @@ $query = new WP_Query($args);
             if (selectedVariationId) {
                 // Thêm gói cước vào giỏ hàng
                 fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+=======
+    // Đóng popup
+    document.querySelector('.close-popup').addEventListener('click', function() {
+        document.getElementById('package-popup').style.display = 'none';
+    });
+
+    // Thêm gói cước vào giỏ hàng
+    document.querySelector('.add-package').addEventListener('click', function() {
+        const selectedPackageId = document.querySelector('#carousel-items .carousel-item.active .package-item').dataset.id;
+        const productId = document.getElementById('package-popup').dataset.productId;
+        const phoneNumber = document.getElementById('package-popup').dataset.phoneNumber;
+
+        if (selectedPackageId) {
+            // Thêm gói cước vào giỏ hàng
+            fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    'action': 'add_to_cart',
+                    'product_id': selectedPackageId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Thêm sản phẩm SIM vào giỏ hàng với số điện thoại
+                    fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+>>>>>>> origin/main
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                         },
                         body: new URLSearchParams({
                             'action': 'add_to_cart',
+<<<<<<< HEAD
                             'product_id': selectedVariationId
+=======
+                            'product_id': productId,
+                            'phone_number': phoneNumber
+>>>>>>> origin/main
                         })
                     })
                     .then(response => response.json())
@@ -501,8 +560,8 @@ $query = new WP_Query($args);
             </button>
         </div>
         <div class="payment-group">
-            <button class="button add-package">Thêm vào giỏ hàng</button>
-            <button class="button proceed-to-checkout">Tiến hành thanh toán</button>
+        <button class="button add-package">Thêm vào giỏ hàng</button>
+        <button class="button proceed-to-checkout">Tiến hành thanh toán</button>
         </div>
     </div>
 </div>
