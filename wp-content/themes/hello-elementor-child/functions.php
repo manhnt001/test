@@ -85,6 +85,63 @@ function handle_checkout_payment() {
     wp_die();
 }
 
+// Hàm xử lý thêm sản phẩm biến thể vào giỏ hàng qua AJAX
+function add_variation_to_cart_ajax() {
+    // Kiểm tra tham số `variation_id` và `product_id` có hợp lệ
+    if (isset($_POST['variation_id']) && isset($_POST['product_id'])) {
+        $variation_id = absint($_POST['variation_id']);
+        $product_id = absint($_POST['product_id']);
+        
+        // Kiểm tra nếu sản phẩm có trong giỏ hàng
+        $added = WC()->cart->add_to_cart($product_id, 1, $variation_id);
+        
+        if ($added) {
+            // Trả về kết quả thành công nếu thêm vào giỏ hàng thành công
+            wp_send_json_success(['message' => 'Sản phẩm đã được thêm vào giỏ hàng!']);
+        } else {
+            wp_send_json_error(['message' => 'Lỗi khi thêm sản phẩm vào giỏ hàng.']);
+        }
+    } else {
+        wp_send_json_error(['message' => 'Dữ liệu không hợp lệ.']);
+    }
+}
+
+// Đăng ký AJAX cho người dùng đã đăng nhập và khách
+add_action('wp_ajax_add_variation_to_cart', 'add_variation_to_cart_ajax');
+add_action('wp_ajax_nopriv_add_variation_to_cart', 'add_variation_to_cart_ajax');
+
+add_action('wp_ajax_submit_product_review', 'submit_product_review');
+add_action('wp_ajax_nopriv_submit_product_review', 'submit_product_review');
+
+function submit_product_review() {
+    // Kiểm tra nonce và xác thực dữ liệu nếu cần
+    $name = sanitize_text_field($_POST['name']);
+    $rating = intval($_POST['rating']);
+    $comment = sanitize_textarea_field($_POST['comment']);
+    $product_id = intval($_POST['product_id']);
+
+    // Lưu đánh giá vào cơ sở dữ liệu (ví dụ sử dụng wp_insert_comment)
+    $data = array(
+        'comment_post_ID' => $product_id,
+        'comment_author' => $name,
+        'comment_content' => $comment,
+        'comment_type' => 'product_review',
+        'comment_approved' => 1,
+        'meta_value' => $rating, // Có thể lưu đánh giá vào meta
+    );
+
+    $comment_id = wp_insert_comment($data);
+
+    if ($comment_id) {
+        // Nếu cần, bạn có thể thêm mã để lưu thêm meta hoặc thông tin
+        wp_send_json_success(array('message' => 'Đánh giá đã được gửi thành công.'));
+    } else {
+        wp_send_json_error(array('message' => 'Không thể gửi đánh giá. Vui lòng thử lại.'));
+    }
+}
+
+
+
 
 
 

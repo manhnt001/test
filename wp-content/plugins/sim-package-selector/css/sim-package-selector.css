@@ -1,7 +1,17 @@
 /* Popup Styles */
-.package-item.selected {
-    border: 1px solid #007bff;
 
+@media (max-width: 768px) {
+    .carousel-item {
+        display: none; /* Ẩn tất cả gói cước */
+    }
+    .carousel-item.active {
+        display: flex; /* Hiển thị gói cước đang hoạt động */
+    }
+}
+
+.package-item.selected {
+    border: 2px solid #007bff; /* Màu sắc khi gói cước được chọn */
+    background-color: #f0f8ff; /* Màu nền khi gói cước được chọn */
 }
 
 .popup {
@@ -18,16 +28,15 @@
 }
 
 .popup-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background: #fff;
     padding: 20px;
     border-radius: 10px;
-    width: 90%;
-    max-width: 100%;
+    width: 100%;
+    max-width: 1100px;
     position: relative;
-    flex-direction: column;
+}
+.popup-content h2{
+    text-align: center;
 }
 
 #package-popup {
@@ -36,22 +45,26 @@
     align-items: center; 
 }
 
+.popup-content {
+    display: block;
+}
 
 .package-details {
     width: 300px; 
     padding: 10px;
     border: 1px solid #ccc;
+    margin: 10px 0; 
     box-sizing: border-box;
 	border-radius:16px;
-    text-align: left;
 }
 .package-details h5{
-    text-align: left;
+    text-align: center;
 }
 
 .carousel {
     text-align: center;
 }
+
 
 .payment-group{
 	display: flex;
@@ -74,32 +87,61 @@
     text-align: left;
 }
 
-.package-item {
-    display: flex;
+.carousel-item .d-flex{
     justify-content: center;
-    border-radius: 16px;
+    align-items: center;
+}
+.package-item {
+    position: relative; 
+}
+
+.check-icon {
+    position: absolute; 
+    top: -1px; /* Khoảng cách từ trên cùng */
+    right: -1px; /* Khoảng cách từ bên phải */ 
+    display: none; 
+}
+
+
+.package-item {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
     margin: 10px;
     transition: transform 0.3s;
+    align-items: flex-start;
 }
 
 .package-item:hover {
     transform: scale(1.05);
     border-color: #007bff; /* Màu sắc khi hover */
 }
+.add-package {
+    border: 1px solid #D2D5DF !important;
+    background-color: #fff !important;
+    color: #344051 !important;
+    border-radius: 8px !important;
+    line-height: 24px;
+}
 
 /* Carousel Control Styles */
-.carousel{
-    padding: 15px 0;
-}
 .carousel-control-prev,
 .carousel-control-next {
-    filter: invert(1); /* Đổi màu icon sang trắng */
-    background: none !important; /* Xóa nền khi hover */
+    background: none !important; 
 }
 
 .carousel-control-prev:hover,
 .carousel-control-next:hover {
-    background: none !important; /* Xóa nền khi hover */
+    background: none !important; 
+}
+#package-carousel .carousel-control-prev,
+#package-carousel .carousel-control-next{
+    width: 50px;
+    height: 50px;
+    top: 50%;
 }
 
 .close-popup {
@@ -147,8 +189,6 @@
     background-color: #0056b3;
 }
 
-
-
 /* Resize image network*/
 .product-item.nha-mang img {
     width: 70px; /* Đặt chiều rộng mong muốn */
@@ -172,5 +212,3 @@
     justify-content: center;
     align-items: center;
 }
-
-

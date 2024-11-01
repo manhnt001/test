@@ -1,0 +1,140 @@
+/*css ảnh sản phẩm*/
+.product-image img{
+width: 560px;
+height: auto;
+}
+
+/*css nút bấm chọn biến thể gói cước*/
+.variations-buttons {
+    display: flex; /* Đảm bảo các button nằm trên cùng một hàng */
+}
+
+.variation-item {
+    margin-right: 10px; /* Khoảng cách bên phải giữa các button */
+}
+
+.variation-item:last-child {
+    margin-right: 0; /* Không thêm khoảng cách cho button cuối cùng */
+}
+
+.sim-type {
+    margin-top: 20px;
+}
+
+.sim-option {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.sim-label {
+    display: flex;
+    align-items: center;
+}
+
+.sim-label img {
+    margin-right: 10px;
+    width: 24px; /* Kích thước ảnh tùy chỉnh */
+    height: auto;
+}
+
+.sim-option {
+    margin-right: 10px;
+    /* Giãn cách giữa các button */
+}
+
+.sim-option.active {
+    background-color: #007bff;
+    /* Màu nền cho button đã chọn */
+    color: white;
+    /* Màu chữ cho button đã chọn */
+}
+
+.btn-outline-primary {
+    --bs-btn-color: #161F42 !important;
+    --bs-btn-border-color: #E3E5ED !important;
+    --bs-btn-hover-color: #161F42 !important;
+    --bs-btn-hover-bg: #F0F6FF !important;
+    --bs-btn-hover-border-color: #0078D8 !important;
+    --bs-btn-focus-shadow-rgb: 13, 110, 253;
+    --bs-btn-active-color: #161F42 !important;
+    --bs-btn-active-bg: #F0F6FF !important;
+    --bs-btn-active-border-color: #0078D8 !important;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #161F42 !important;
+    --bs-btn-disabled-bg: #fff !important;
+    --bs-btn-disabled-border-color: #E3E5ED !important;
+    --bs-gradient: none;
+}
+
+.sim-option {
+    position: relative; /* Đảm bảo icon có thể được đặt bên cạnh nút */
+    padding-right: 30px; /* Tạo không gian bên phải cho icon */
+}
+
+.check-icon {
+    position: absolute; /* Đặt icon trong vị trí tuyệt đối */
+    top: 0px !important;
+    right: 0px !important;
+    width: 20px; /* Đặt kích thước của icon nếu cần */
+    height: auto; /* Đảm bảo tỷ lệ khung hình đúng */
+    margin:0;
+}
+
+.sim-option.active .check-icon {
+    display: inline; /* Hiển thị icon khi nút được chọn */
+}
+.review-popup {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.review-popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 400px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.close {
+    cursor: pointer;
+    float: right;
+    font-size: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin: 10px 0 5px;
+}
+
+input, select, textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
